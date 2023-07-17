@@ -1,0 +1,33 @@
+config:
+  target: "https://api.playqround.site" 
+  phases:
+    - duration: 80
+      arrivalCount: 10
+      name: "login test" 
+  payload:
+    fields:
+      - "email"
+      - "nickname"
+      - "password"
+    path: "./0.data.csv"
+    order: sequence
+
+scenarios:
+  - flow:
+      - post:
+          url: "/api/auth/signin"
+          json:
+            userEmail: "{{ email }}"
+            userPassword: "{{ password }}"
+          capture:
+            json: "$.token"
+            as: "token"
+
+      - think: 3
+
+      - get:
+          url: "/api/users/info"
+          headers:
+            authorization: "Bearer {{ token }}"
+
+      - think: 3

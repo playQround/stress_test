@@ -1,0 +1,42 @@
+{
+    "config": {
+       "target": "https://api.playqround.site",
+       "phases": [
+          {
+             "duration": 30,
+             "arrivalRate": 30,
+             "name": "Low Load"
+          },
+          {
+            "duration": 30,
+            "arrivalRate": 60,
+            "name": "Medium Load"
+          }
+       ]
+    },
+    "scenarios": [
+       {
+          "flow": [
+             {
+                "get": {
+                   "url": "/api/rooms",
+                   "name": "Get Room List"
+                }
+             },
+             {
+                "post": {
+                    "url": "/api/auth/signin",
+                    "headers": {
+                        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJFbWFpbCI6InBldGVybGFoQG5hdmVyLmNvbSIsInVzZXJOYW1lIjoicGV0ZXJsYWgiLCJ1c2VyUmF0aW5nIjowLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTI2VDIxOjM2OjAxLjAxOVoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTI2VDIxOjM2OjAxLjAxOVoiLCJpYXQiOjE2ODk0MDk2NzMsImV4cCI6MTY4OTQxMzI3M30.v2NwPNb_x2eJTbcrpa1RgSx3pFoVRQxP2PK-TknLcjY"
+                    },
+                    "Body": {
+                        "userEmail": "peterlah@naver.com",
+                        "userPassword": "@zbqm1075711"
+                    },
+                    "name": "login"
+                }
+             }
+          ]
+       }
+    ]
+ }

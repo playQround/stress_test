@@ -1,0 +1,21 @@
+config:
+  target: "https://api.playqround.site"   # 이 부분을 테스트할 대상 URL로 변경해주세요.
+  phases:
+    - duration: 11
+      arrivalRate: 10
+  payload:
+    fields:
+      - "email"
+      - "nickname"
+      - "password"
+    path: "./0.data.csv"   # 회원가입 및 로그인 데이터를 포함하는 csv 파일의 경로를 입력해주세요.
+    order: sequence
+
+scenarios:
+  - flow:
+      - post:
+          url: "/api/users/signup"
+          json:
+            userEmail: "{{ email }}"
+            userName: "{{ nickname }}"
+            userPassword: "{{ password }}"

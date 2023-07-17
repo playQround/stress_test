@@ -1,0 +1,36 @@
+config:
+  target: "http://api.playqround.site"
+  socketio:
+    path: "/socket.io"
+    querry:
+      EIO: 4
+      transport: polling
+      t: "{{$randomString(7)}}"
+    transports:
+      - websocket
+  phases:
+    - duration: 10
+      arrivalRate: 5 # 50 터짐
+      name: "small load test"
+scenarios:
+  - name: "Join and Leave Room Test"
+    engine: "socketio"
+    flow:
+      - emit:
+          channel: "joinRoom"
+          data:
+            room: "64b292a1442ff5a932b5331c"
+            nickname: "{{$randomString(5)}}"
+            userId: "123"
+      - think: 1
+      - emit:
+          channel: "startQuiz"
+          data:
+            room: "64b292a1442ff5a932b5331c"
+            nickname: "{{$randomString(5)}}"
+      - think: 15
+      - emit:
+          channel: "leaveRoom"
+          data:
+            room: "64b292a1442ff5a932b5331c"
+            userName: "{{$randomString(5)}}"
