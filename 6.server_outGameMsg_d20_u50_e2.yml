@@ -1,0 +1,53 @@
+config:
+  target: "http://api2.playqround.site"
+  socketio:
+    path: "/socket.io"
+    querry:
+      EIO: 4
+      transport: polling
+      t: "{{$randomString(7)}}"
+    transports:
+      - websocket
+  phases:
+    - duration: 20
+      arrivalRate: 50 # 50 터짐
+      name: "small load test"
+scenarios:
+  - name: "Get All Room List"
+    flow:
+      - get:
+          url: "/api/rooms"
+
+
+  - name: "Join & Chat & Leave Room Test"
+    engine: "socketio"
+    flow:
+
+      - emit:
+          channel: "joinRoom"
+          data:
+            room: "64ba8b0da380a5c6ea5ed3c1"
+            nickname: "{{$randomString(5)}}"
+            userId: "123"
+      - think: 1
+  
+  # - name: "Chat Test"
+  #   engine: "socketio"
+  #   flow:
+      - emit:
+          channel: "messageOutGame"
+          data:
+            room: "64ba8b0da380a5c6ea5ed3c1"
+            nickname: "{{$randomString(5)}}"
+            message: "테스트 중 입니다"
+      - think: 1
+
+  # - name: "Leave Room Test"
+  #   engine: "socketio"
+  #   flow:
+      - emit:
+          channel: "leaveRoom"
+          data:
+            room: "64ba8b0da380a5c6ea5ed3c1"
+            userName: "{{$randomString(5)}}"
+      - think: 1
